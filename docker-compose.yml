@@ -1,0 +1,41 @@
+version: '2.1'
+
+services:
+
+  frontend_admin:
+    image: node:6.11.0
+    working_dir: /frontend
+    container_name: phone_frontend
+    command: bash -c "npm install && npm install @angular/cli -g && npm rebuild node-sass && npm start"
+    networks:
+      - phone_network
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/frontend
+      - phone_frontend_data:/frontend/node_modules
+      
+  backend:
+    image: java:latest
+    working_dir: /backend
+    container_name: phone_backend
+    command: bash -c "apt-get update -y && apt-get install maven -y && mvn spring-boot:run"
+    healthcheck:
+      test: "exit 0"
+    networks:
+      - phone_network
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/backend
+
+volumes:
+  phone_frontend_data:
+    driver: local
+
+
+networks:
+  phone_network:
+    driver: bridge

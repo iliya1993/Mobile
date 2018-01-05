@@ -1,0 +1,38 @@
+<div bsModal #createModal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createModal"
+aria-hidden="true" [config]="{backdrop: 'static'}">
+<div class="modal-dialog">
+
+   <div class="modal-content">
+
+       <form #usercreateForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()" *ngIf="active">
+           <div class="modal-header ">
+               <h4 class="modal-title">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                   <span>create manager form</span>
+               </h4>
+           </div>
+           <div class="modal-body">
+            <div class="input-group">
+                <span class="input-group-addon">Last name</span>
+                <input #userNameInput type="text" name="lastName" class="form-control input-ltr" [(ngModel)]="user.lastName" required maxlength="128" placeholder="Last Name">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon">Name</span>
+                <input  type="text" name="firstName" class="form-control input-ltr" [ngClass]="{'edited':user.firstName}" [(ngModel)]="user.firstName" maxlength="128" placeholder="Name">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon">Position</span>
+                <input  type="text" name="position" class="form-control input-ltr" [ngClass]="{'edited':user.position}" [(ngModel)]="user.position" maxlength="128" placeholder="Position">
+              </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" [disabled]="saving" class="btn btn-default" (click)="close()">Cancel</button>
+               <button type="submit" class="btn btn-primary blue" [disabled]="!usercreateForm.form.valid || saving "><i class="fa fa-save"></i> <span>Save</span></button>
+           </div>
+       </form>
+
+   </div>
+</div>
+</div>

@@ -1,0 +1,42 @@
+<div bsModal #editModal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModal"
+aria-hidden="true" [config]="{backdrop: 'static'}">
+<div class="modal-dialog">
+
+   <div class="modal-content">
+
+       <form #productEditForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()" *ngIf="product && active">
+           <div class="modal-header ">
+               <h4 class="modal-title">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                   <span>Edit product: {{product.model}}</span>
+               </h4>
+           </div>
+           <div class="modal-body">
+                <div class="input-group">
+                        <span class="input-group-addon">Brand</span>
+                        <input type="text" name="Brand" class="form-control input-ltr" [(ngModel)]="product.brand" required maxlength="128">
+                      </div>
+                <div class="input-group">
+                        <span class="input-group-addon">Model</span>
+                        <input type="text" name="Model" class="form-control input-ltr" [ngClass]="{'created':product.model}" [(ngModel)]="product.model" required maxlength="128" placeholder="Model">
+                      </div>
+                <div class="input-group">
+                            <span class="input-group-addon">Processor frequency</span>
+                            <input type="number" name="Frequency" class="form-control input-ltr" [(ngModel)]="product.processorFrequency" required maxlength="128">
+                          </div>
+                <div class="input-group">
+                                <span class="input-group-addon">Cores count</span>
+                                <input type="number" name="Cores" class="form-control" [(ngModel)]="product.processorCoreCount" required maxlength="128">
+                              </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" [disabled]="saving" class="btn btn-default" (click)="close()">Cancel</button>
+               <button type="submit" class="btn btn-primary blue" [disabled]="!productEditForm.form.valid || saving "><i class="fa fa-save"></i> <span>Save</span></button>
+           </div>
+       </form>
+
+   </div>
+</div>
+</div>

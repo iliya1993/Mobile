@@ -1,0 +1,17 @@
+<div class="widgets" >
+  <i class="fa fa-spin fa-spinner" *ngIf="isLoading"></i>
+    <div class="row">
+      <ba-card cardTitle="Clients" baCardClass="with-scroll" class="smart-table-container">
+        <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (deleteConfirm)="onDeleteConfirm($event)"
+        (editConfirm)="onSaveConfirm($event)"
+        (createConfirm)="onCreateConfirm($event)"></ng2-smart-table>
+        <spinner-component [spinnerShow]="isLoading">
+        </spinner-component>
+      </ba-card>
+    </div>
+  
+  </div>
+  

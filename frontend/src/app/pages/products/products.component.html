@@ -1,0 +1,63 @@
+<div class="widgets">
+ 
+  <div class="row">
+        
+      <ba-card title="Mobiles" baCardClass="with-scroll" class="data-table-container">
+            <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+          <div class="row">
+              <div class="col-sm-2">
+                  <label class="label-control">Rows on page</label>
+                  <select id="sel2"class="form-control"
+                  jq-plugin="selectpicker"
+                  [(ngModel)]="rowsOnPage" 
+                  (ngModelChange)="setRow(rowsOnPage)" 
+                  [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let rowsOnPage of pages" [ngValue]="rowsOnPage">{{rowsOnPage}}</option>
+              </select>
+              </div>
+          </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">Mobile information</div>
+
+              <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                   
+                <thead>
+                      <tr>
+                          <th style="width: 10%">Actions</th>
+                          <th style="width: 25%">
+                            <mfDefaultSorter by="brand">Brand</mfDefaultSorter>
+                        </th>
+                          <th style="width: 10%">
+                            <mfDefaultSorter by="model">Model</mfDefaultSorter>
+                        </th>
+                          <th style="width: 10%">
+                              <mfDefaultSorter by="processorFrequency">Processor frequency</mfDefaultSorter>
+                          </th>
+                          <th style="width: 10%">
+                              <mfDefaultSorter by="processorCoreCount">Cores</mfDefaultSorter>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                        <spinner-component [spinnerShow]="loading">
+                                
+                            </spinner-component>
+                      <tr *ngFor="let item of mf.data | paginate: { itemsPerPage: rowsOnPage, currentPage: currentPage, totalItems: total }">
+                          <td>
+                              <button (click)="delete(item)" class="btn btn-default"><i class="ion-trash-a"></i></button>
+                              <button (click)="edit(item)" class="btn btn-default"><i class="ion-edit"></i></button>
+                          </td>
+                          <td>{{item.brand}}</td>
+                          <td>{{item.model}}</td>
+                          <td>{{item.processorFrequency}}</td>
+                          <td>{{item.processorCoreCount}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </ba-card>
+      <button type="button" class="btn btn-primary btn-with-icon" (click)="create()"><i class="ion-plus"></i></button>
+  </div>
+</div>
+<editProductModal #editProductModal (modalSave)="loadTable()"></editProductModal>
+<createProductModal #createProductModal (modalSave)="loadTable()"></createProductModal>
